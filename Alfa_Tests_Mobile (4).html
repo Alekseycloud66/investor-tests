@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тесты Альфа-Инвестиции</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap');
+  :root {
+    --gd:#1B4332; --gm:#2D6A4F; --gl:#52B788; --gp:#D8F3DC;
+    --bg:#F4F6F3; --wh:#fff; --ink:#111827; --mu:#6B7280;
+    --br:#E5E7EB; --ac:#E9C46A; --ab:#ECFDF5; --at:#065F46;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'IBM Plex Sans',-apple-system,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+
+  .hdr{background:var(--gd);color:#fff;padding:14px 16px 12px;}
+  .hdr h1{font-size:15px;font-weight:700;}
+  .hdr p{font-size:11px;color:var(--gp);margin-top:3px;font-family:'IBM Plex Mono',monospace;}
+
+  .srch-wrap{background:var(--gd);padding:0 16px 14px;}
+  .srch-wrap input{width:100%;padding:10px 14px;border-radius:8px;border:none;background:rgba(255,255,255,0.15);color:#fff;font-size:15px;font-family:inherit;outline:none;-webkit-appearance:none;}
+  .srch-wrap input::placeholder{color:rgba(255,255,255,0.45);}
+
+  main{padding:10px 12px 80px;}
+
+  .card{background:var(--wh);border-radius:12px;border:1px solid var(--br);margin-bottom:9px;overflow:hidden;}
+  .card.hide{display:none;}
+
+  .card-btn{width:100%;display:flex;align-items:center;gap:10px;padding:13px 14px;background:var(--gd);border:none;cursor:pointer;text-align:left;min-height:52px;}
+  .card-btn:active{background:var(--gm);}
+
+  .c-num{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--gl);color:var(--gd);padding:2px 7px;border-radius:4px;font-weight:700;flex-shrink:0;line-height:1.6;}
+  .c-title{font-size:13px;font-weight:600;color:#fff;flex:1;line-height:1.35;}
+  .c-arr{width:18px;height:18px;color:rgba(255,255,255,0.5);flex-shrink:0;transition:transform .2s;}
+  .card.open .c-arr{transform:rotate(180deg);}
+
+  .card-body{display:none;}
+  .card.open .card-body{display:block;}
+
+  .card-note{font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--mu);background:#FFFBEB;border-bottom:1px solid var(--br);padding:7px 14px;border-left:3px solid var(--ac);}
+
+  .qa{border-bottom:1px solid var(--br);}
+  .qa:last-child{border-bottom:none;}
+  .qa.hide{display:none;}
+
+  .q{display:flex;gap:8px;padding:9px 14px 7px;background:#FAFAFA;}
+  .a{display:flex;gap:8px;padding:7px 14px 9px;background:var(--ab);}
+  .qn{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mu);flex-shrink:0;padding-top:2px;min-width:20px;}
+  .qt{font-size:12.5px;color:var(--ink);font-weight:500;line-height:1.45;}
+  .al{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gl);flex-shrink:0;font-weight:700;padding-top:2px;min-width:20px;}
+  .at{font-size:12.5px;color:var(--at);font-weight:600;line-height:1.45;}
+
+  .nores{display:none;text-align:center;padding:40px 20px;color:var(--mu);font-size:13px;}
+
+  .bar{position:fixed;bottom:0;left:0;right:0;background:var(--wh);border-top:1px solid var(--br);padding:8px 16px 12px;display:flex;align-items:center;gap:10px;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.07);}
+  .bar-txt{font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--mu);white-space:nowrap;}
+  .bar-track{flex:1;height:4px;background:var(--br);border-radius:2px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--gl);border-radius:2px;width:0%;transition:width .3s;}
+  .bar-btn{background:var(--gp);color:var(--gd);border:none;font-size:11px;font-family:'IBM Plex Mono',monospace;font-weight:700;padding:6px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;}
+  .bar-btn:active{background:var(--gl);}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <h1>Тесты Альфа-Инвестиции &nbsp;·&nbsp; 14 тестов</h1>
+  <p>Актуально 2026 · Банк вопросов ЦБ РФ</p>
+</header>
+
+<div class="srch-wrap">
+  <input type="text" id="Q" placeholder="🔍  Поиск по вопросу или ответу...">
+</div>
+
+<main id="main">
+<p class="nores" id="nores">Ничего не найдено</p>
+
+<div class="card open" id="c1">
+  <button class="card-btn" data-id="c1"><span class="c-num">01</span><span class="c-title">Маржинальная торговля</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ 7 вопросов в тесте, 4 выбираются из этого банка случайно</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Маржинальная торговля — это...</span></div><div class="a"><span class="al">→</span><span class="at">Торговля с использованием заёмных средств брокера</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">С какой целью брокер использует ставки риска?</span></div><div class="a"><span class="al">→</span><span class="at">Для расчёта размера начальной или минимальной маржи</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Может ли взиматься плата за заёмные средства брокера?</span></div><div class="a"><span class="al">→</span><span class="at">Может, если это предусмотрено договором с брокером</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">При маржинальных сделках размер возможных убытков...</span></div><div class="a"><span class="al">→</span><span class="at">Больше, чем при торговле только на собственные средства</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">50% своих + 50% заёмных, продали на 5% дороже. Результат?</span></div><div class="a"><span class="al">→</span><span class="at">Невозможно определить — влияют комиссии и стоимость займа</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В6</span><span class="qt">Верное утверждение об убытках при маржинальных продажах:</span></div><div class="a"><span class="al">→</span><span class="at">Размер не ограничен и может превышать объём средств на счёте</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В7</span><span class="qt">Верное утверждение о маржинальном займе:</span></div><div class="a"><span class="al">→</span><span class="at">Условия определяются брокерским договором</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В8</span><span class="qt">Вы неквал. инвестор, торгуете с плечом:</span></div><div class="a"><span class="al">→</span><span class="at">Можете потратить больше стоимости активов; возмещение убытков гарантийным фондом не предусмотрено</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В9</span><span class="qt">Когда брокер может принудительно закрыть позицию?</span></div><div class="a"><span class="al">→</span><span class="at">При недостаточности обеспечения по маржинальной позиции</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В10</span><span class="qt">Портфель ниже минимальной маржи:</span></div><div class="a"><span class="al">→</span><span class="at">Можно довнести или закрыть позиции. Иначе брокер принудительно закроет часть позиций</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В11</span><span class="qt">Портфель ниже начальной маржи:</span></div><div class="a"><span class="al">→</span><span class="at">Нельзя совершать сделки, увеличивающие разрыв между портфелем и начальной маржой</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c2">
+  <button class="card-btn" data-id="c2"><span class="c-num">02</span><span class="c-title">Акции вне котировальных списков</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ 7 вопросов, 4 из банка. Неограниченные попытки.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Убытки от сделок с акциями — возместят?</span></div><div class="a"><span class="al">→</span><span class="at">Нет, не возместят</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Риски при покупке акций вне котировального списка:</span></div><div class="a"><span class="al">→</span><span class="at">Риск не найти покупателя или продавца</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Компания А в списке, Б — нет. Верное утверждение:</span></div><div class="a"><span class="al">→</span><span class="at">Существуют требования для включения в список, которым А должна соответствовать</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Как быстро можно продать акцию?</span></div><div class="a"><span class="al">→</span><span class="at">Точная дата не может быть определена</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Чем отличаются акции вне списка?</span></div><div class="a"><span class="al">→</span><span class="at">Более волатильны; количество сделок в день меньше</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В6</span><span class="qt">Особенность акций в некотировальной части:</span></div><div class="a"><span class="al">→</span><span class="at">Нет требований к объёму выпуска, установленных биржей</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В7</span><span class="qt">Цена акции вне котировального списка:</span></div><div class="a"><span class="al">→</span><span class="at">Отсутствие в списке само по себе не означает, что цена будет всегда ниже</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В8</span><span class="qt">Акции куплены на внебиржевом рынке. Верное утверждение:</span></div><div class="a"><span class="al">→</span><span class="at">Продавать можно на бирже и/или внебиржевом рынке, если иное не предусмотрено договором</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В9</span><span class="qt">Зависят ли дивиденды от включения в котировальный список?</span></div><div class="a"><span class="al">→</span><span class="at">Размер и частота выплат не зависят от включения в список</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В10</span><span class="qt">Верное утверждение о ликвидности:</span></div><div class="a"><span class="al">→</span><span class="at">Акция вне списка, как правило, менее ликвидна</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В11</span><span class="qt">Требования биржи к компаниям...</span></div><div class="a"><span class="al">→</span><span class="at">Устанавливаются отдельно для разных уровней котировальных списков и некотировальной части</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c3">
+  <button class="card-btn" data-id="c3"><span class="c-num">03</span><span class="c-title">ПФИ — фьючерсы и опционы</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ 7 вопросов, 4 из банка.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Купили опцион на покупку акций — у вас...</span></div><div class="a"><span class="al">→</span><span class="at">Право купить акции по цене из условий опциона</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Продали поставочный опцион на покупку — вы обязаны...</span></div><div class="a"><span class="al">→</span><span class="at">Продать акции по цене из условий, если покупатель потребует</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Верное утверждение о фьючерсном контракте:</span></div><div class="a"><span class="al">→</span><span class="at">Может быть как поставочным, так и расчётным</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Продали опцион на покупку. Потенциальные убытки:</span></div><div class="a"><span class="al">→</span><span class="at">Ничем не ограничены</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Убыток на срочном рынке — возместят?</span></div><div class="a"><span class="al">→</span><span class="at">Нет, не возместят</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В6</span><span class="qt">Купили опцион на продажу. Потенциальные убытки:</span></div><div class="a"><span class="al">→</span><span class="at">Ограничены уплаченной премией по опциону</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В7</span><span class="qt">Внебиржевой ПФИ. Верное утверждение:</span></div><div class="a"><span class="al">→</span><span class="at">При досрочном расторжении можно потерять часть инвестированных средств</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В8</span><span class="qt">ПФИ на акции, объявлены дивиденды:</span></div><div class="a"><span class="al">→</span><span class="at">Эмитент не выплачивает доход сторонам ПФИ; ПФИ может менять обязательства при дивидендах</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В9</span><span class="qt">Что НЕ влияет на результат форварда?</span></div><div class="a"><span class="al">→</span><span class="at">Ни один из ответов не является верным</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В10</span><span class="qt">Фьючерс на акции, цена резко упала:</span></div><div class="a"><span class="al">→</span><span class="at">Брокер потребует обеспечение; при невыполнении позиция закроется, баланс может стать отрицательным</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В11</span><span class="qt">Брокер требует довнести средства:</span></div><div class="a"><span class="al">→</span><span class="at">Можно довнести или совершить нужные сделки. Иначе брокер принудительно закроет часть позиций</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c4">
+  <button class="card-btn" data-id="c4"><span class="c-num">04</span><span class="c-title">РФ облигации без кредитного рейтинга</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ 7 вопросов, 4 из банка.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Кредитный рейтинг облигаций — это...</span></div><div class="a"><span class="al">→</span><span class="at">Оценка агентством способности эмитента выполнять обязательства по облигациям</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Вывод, если облигациям не присвоен рейтинг:</span></div><div class="a"><span class="al">→</span><span class="at">Все перечисленное верно</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Как быстро продать низколиквидные облигации?</span></div><div class="a"><span class="al">→</span><span class="at">Невозможно определить — нужен покупатель</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Правильное утверждение о ликвидных облигациях:</span></div><div class="a"><span class="al">→</span><span class="at">Чем ликвиднее облигация, тем меньше спред между ценами покупки и продажи</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Рыночный риск для облигаций с рейтингом и без него:</span></div><div class="a"><span class="al">→</span><span class="at">Рыночный риск влияет на оба типа</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В6</span><span class="qt">К кредитному риску относится:</span></div><div class="a"><span class="al">→</span><span class="at">Все перечисленное верно</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В7</span><span class="qt">Куплена облигация без рейтинга. Верное утверждение:</span></div><div class="a"><span class="al">→</span><span class="at">Можно продать до погашения, но из-за низкой ликвидности цена может не устроить</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В8</span><span class="qt">Рейтинг ВВ+. Верное утверждение:</span></div><div class="a"><span class="al">→</span><span class="at">Способность ниже, чем у более высоких рейтингов; вероятность дефолта существует в обоих случаях</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В9</span><span class="qt">Отсутствие рейтинга выпуска означает:</span></div><div class="a"><span class="al">→</span><span class="at">Отсутствие мнения рейтингового агентства о кредитном риске выпуска</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В10</span><span class="qt">Верное утверждение об облигации без рейтинга:</span></div><div class="a"><span class="al">→</span><span class="at">Ликвидность зависит от количества покупателей и продавцов на бирже</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В11</span><span class="qt">Облигация с рейтингом В+, доходность 14%. Ваша доходность...</span></div><div class="a"><span class="al">→</span><span class="at">Может быть меньше 14% при продаже до погашения</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c5">
+  <button class="card-btn" data-id="c5"><span class="c-num">05</span><span class="c-title">Облигации со структурным доходом</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ Доходность зависит от наступления условий. 7 вопросов, 4 из банка.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Можно ли в дату покупки точно рассчитать купон?</span></div><div class="a"><span class="al">→</span><span class="at">Нет — известен порядок расчёта, но не точные значения активов</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Кем и когда устанавливается порядок выплат?</span></div><div class="a"><span class="al">→</span><span class="at">Уполномоченным органом эмитента до начала размещения выпуска</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Верное утверждение об инвестициях в такие облигации:</span></div><div class="a"><span class="al">→</span><span class="at">Риски обычных облигаций + доп. рыночный риск негативной динамики базовых активов</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Что НЕ является риском по таким облигациям?</span></div><div class="a"><span class="al">→</span><span class="at">Риск убытков при погашении в виде разницы номинал — сумма погашения</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Можно ли точно предсказать влияние актива на цену продажи?</span></div><div class="a"><span class="al">→</span><span class="at">Нет — на цену влияет значительное число факторов</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В6</span><span class="qt">Размер дохода зависит от...</span></div><div class="a"><span class="al">→</span><span class="at">Акций, товаров, валют, процентных ставок и иных показателей</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В7</span><span class="qt">Такие облигации гарантируют выплату...</span></div><div class="a"><span class="al">→</span><span class="at">Только номинальной стоимости при погашении</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В8</span><span class="qt">Купили при размещении, держали до погашения. Получите:</span></div><div class="a"><span class="al">→</span><span class="at">Номинал + фиксированный купон (если есть) + доп. доход при выполнении условия</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В9</span><span class="qt">Облигация размещается по 105% от номинала. Погашение:</span></div><div class="a"><span class="al">→</span><span class="at">По 100% от номинала</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В10</span><span class="qt">Рыночная стоимость зависит от цены акции?</span></div><div class="a"><span class="al">→</span><span class="at">Зависит от многих факторов, включая цену акции, но не определяется ею напрямую</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В11</span><span class="qt">Акция на дату наблюдения ниже начальной на 1%. Что выплатят?</span></div><div class="a"><span class="al">→</span><span class="at">Доход по фиксированной ставке купона и номинальная стоимость</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c6">
+  <button class="card-btn" data-id="c6"><span class="c-num">06</span><span class="c-title">ЗПИФ — закрытые паевые фонды</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ Долгосрочные вложения с ограниченной ликвидностью.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Можно ли в любой день продать пай ЗПИФ управляющей компании?</span></div><div class="a"><span class="al">→</span><span class="at">Нет — погашение происходит по окончании срока договора</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Когда пайщик не вправе требовать погашения?</span></div><div class="a"><span class="al">→</span><span class="at">Как правило, нельзя требовать погашения до завершения срока ЗПИФ</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Гарантирован ли доход по паям ЗПИФ?</span></div><div class="a"><span class="al">→</span><span class="at">Нет, доходность зависит от результатов управления</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Если стоимость активов фонда снизилась:</span></div><div class="a"><span class="al">→</span><span class="at">Стоимость паев снижается; УК не возмещает убытки из собственных средств</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Пай ЗПИФ можно реализовать...</span></div><div class="a"><span class="al">→</span><span class="at">На вторичном рынке (биржа или внебиржевой), если предусмотрено обращение паев</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В6</span><span class="qt">Чем ЗПИФ отличается от ОПИФ?</span></div><div class="a"><span class="al">→</span><span class="at">В ЗПИФ погашение — по окончании срока; в ОПИФ — в любой рабочий день</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c7">
+  <button class="card-btn" data-id="c7"><span class="c-num">07</span><span class="c-title">Иностранные акции</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ Акции иностранных эмитентов вне основных индексов.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Доп. риски иностранных акций по сравнению с российскими:</span></div><div class="a"><span class="al">→</span><span class="at">Валютный риск и политические риски страны эмитента</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Могут ли инвесторы-резиденты РФ потерять доступ?</span></div><div class="a"><span class="al">→</span><span class="at">Да — из-за санкций, ограничений инфраструктуры или блокировки активов</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Налог на дивиденды по иностранным акциям:</span></div><div class="a"><span class="al">→</span><span class="at">По ставке страны эмитента + возможно дополнительно в РФ (с учётом СОИДН)</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Убытки по иностранным акциям:</span></div><div class="a"><span class="al">→</span><span class="at">Не возмещаются; несёт инвестор самостоятельно</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Ликвидность иностранных акций вне основных индексов:</span></div><div class="a"><span class="al">→</span><span class="at">Как правило, ниже — меньше сделок и шире спред</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c8">
+  <button class="card-btn" data-id="c8"><span class="c-num">08</span><span class="c-title">Иностр. облигации без рейтинга</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ Аналогичен тесту №04 + валютные и страновые риски.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Кредитный рейтинг облигации — это...</span></div><div class="a"><span class="al">→</span><span class="at">Оценка агентством способности эмитента выполнять обязательства</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Доп. риски иностранных облигаций без рейтинга:</span></div><div class="a"><span class="al">→</span><span class="at">Валютный риск, политические и страновые риски, низкая ликвидность</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Ликвидность облигации без рейтинга зависит от...</span></div><div class="a"><span class="al">→</span><span class="at">Количества покупателей и продавцов на рынке</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Рыночный риск для облигаций с рейтингом и без:</span></div><div class="a"><span class="al">→</span><span class="at">Влияет на оба типа</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">К кредитному риску относится:</span></div><div class="a"><span class="al">→</span><span class="at">Все перечисленное верно</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c9">
+  <button class="card-btn" data-id="c9"><span class="c-num">09</span><span class="c-title">Структурные облигации</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ Не гарантируется даже возврат номинала — отличие от теста №05.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Гарантируется ли возврат номинала?</span></div><div class="a"><span class="al">→</span><span class="at">Нет — выплата номинала зависит от наступления определённых событий</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Чем структурная облигация отличается от обычной?</span></div><div class="a"><span class="al">→</span><span class="at">Выплаты (включая номинал) зависят от событий или изменения цены базового актива</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">При погашении инвестор может получить...</span></div><div class="a"><span class="al">→</span><span class="at">Сумму меньше номинала или полностью утратить вложения при неблагоприятном сценарии</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Верное утверждение о рисках:</span></div><div class="a"><span class="al">→</span><span class="at">Потери могут быть значительными, вплоть до полной утраты вложений</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Базовый актив показывает негативную динамику:</span></div><div class="a"><span class="al">→</span><span class="at">Инвестор может получить ниже номинала или не получить купона</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c10">
+  <button class="card-btn" data-id="c10"><span class="c-num">10</span><span class="c-title">Конвертируемые облигации</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ Облигации, которые можно обменять на акции эмитента.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Что такое конвертируемая облигация?</span></div><div class="a"><span class="al">→</span><span class="at">Облигация с правом конвертировать её в акции или иные бумаги эмитента</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Конвертация происходит...</span></div><div class="a"><span class="al">→</span><span class="at">По коэффициенту или цене, установленным в условиях выпуска</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Конвертировали в акции, цена акций упала:</span></div><div class="a"><span class="al">→</span><span class="at">Инвестор несёт убытки как акционер; возврат облигации не предусмотрен</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Доходность конвертируемых облигаций:</span></div><div class="a"><span class="al">→</span><span class="at">Купонная ставка, как правило, ниже обычных облигаций того же эмитента</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Риски конвертируемой облигации:</span></div><div class="a"><span class="al">→</span><span class="at">Сочетают риски облигации (кредитный, рыночный) и акции (волатильность цены)</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c11">
+  <button class="card-btn" data-id="c11"><span class="c-num">11</span><span class="c-title">Спонсируемые ETF</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ ETF с поддержкой управляющей компании. Только Альфа-Инвестиции.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Что такое спонсируемый ETF?</span></div><div class="a"><span class="al">→</span><span class="at">Биржевой фонд, созданный с согласия эмитента базового актива (есть спонсор)</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Гарантируется ли доход по ETF?</span></div><div class="a"><span class="al">→</span><span class="at">Нет — стоимость зависит от динамики базовых активов</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Верное утверждение о ликвидности ETF:</span></div><div class="a"><span class="al">→</span><span class="at">Зависит от маркет-мейкера и объёма торгов; продать по желаемой цене не всегда возможно</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Базовые активы упали в цене:</span></div><div class="a"><span class="al">→</span><span class="at">Стоимость пая ETF также снизится; убытки несёт инвестор</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Риски спонсируемого ETF:</span></div><div class="a"><span class="al">→</span><span class="at">Рыночный риск активов + риск ликвидности + валютный риск (при иностранных активах)</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c12">
+  <button class="card-btn" data-id="c12"><span class="c-num">12</span><span class="c-title">Неспонсируемые ETF</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ ETF без поддержки эмитента — менее прозрачны. Только Альфа-Инвестиции.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Отличие неспонсируемого ETF от спонсируемого:</span></div><div class="a"><span class="al">→</span><span class="at">Создаётся без согласия эмитента базового актива; менее прозрачен</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Уровень риска по сравнению со спонсируемым:</span></div><div class="a"><span class="al">→</span><span class="at">Как правило, выше — меньше прозрачности и ликвидности</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Гарантируется ли доход?</span></div><div class="a"><span class="al">→</span><span class="at">Нет — зависит от динамики базовых активов</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Раскрытие информации:</span></div><div class="a"><span class="al">→</span><span class="at">Может быть меньше, чем у спонсируемых фондов</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В5</span><span class="qt">Убытки по неспонсируемому ETF:</span></div><div class="a"><span class="al">→</span><span class="at">Несёт инвестор; никто не возмещает</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c13">
+  <button class="card-btn" data-id="c13"><span class="c-num">13</span><span class="c-title">РФ облигации по юрисдикции выпуска</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ Российский эмитент, выпуск по иностранному праву. Только Альфа.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Чем отличается от стандартной российской облигации?</span></div><div class="a"><span class="al">→</span><span class="at">Выпущена по законодательству иностранного государства — доп. правовые риски</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Дополнительные риски:</span></div><div class="a"><span class="al">→</span><span class="at">Правовые риски иностранной юрисдикции, валютный риск, риск блокировки инфраструктуры</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">Верное утверждение об исполнении обязательств:</span></div><div class="a"><span class="al">→</span><span class="at">Регулируется иностранным правом; защита прав инвестора может быть затруднена</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Ликвидность таких облигаций:</span></div><div class="a"><span class="al">→</span><span class="at">Может быть существенно ниже из-за правовой сложности и узкого круга покупателей</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="c14">
+  <button class="card-btn" data-id="c14"><span class="c-num">14</span><span class="c-title">Иностр. облигации по юрисдикции эмитента</span><svg class="c-arr" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+  <div class="card-body">
+    <div class="card-note">⚡ Иностранный эмитент, иностранное право. Только Альфа-Инвестиции.</div>
+    <div class="qa"><div class="q"><span class="qn">В1</span><span class="qt">Дополнительные риски иностранных облигаций:</span></div><div class="a"><span class="al">→</span><span class="at">Валютный риск, страновой и политический риск, правовые риски иностранной юрисдикции</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В2</span><span class="qt">Защита прав российского инвестора:</span></div><div class="a"><span class="al">→</span><span class="at">Осложнена из-за различий правовых систем; права могут отличаться от российских</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В3</span><span class="qt">При введении санкций или ограничений возможно...</span></div><div class="a"><span class="al">→</span><span class="at">Блокировка выплат и ограничение доступа к иностранным бумагам</span></div></div>
+    <div class="qa"><div class="q"><span class="qn">В4</span><span class="qt">Убытки по таким облигациям:</span></div><div class="a"><span class="al">→</span><span class="at">Несёт инвестор; никакого возмещения не предусмотрено</span></div></div>
+  </div>
+</div>
+
+</main>
+
+<div class="bar">
+  <span class="bar-txt" id="barTxt">1 / 14</span>
+  <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+  <button class="bar-btn" id="barBtn">Открыть все</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // ── аккордеон через делегирование ──
+  document.getElementById('main').addEventListener('click', function(e) {
+    var btn = e.target.closest('.card-btn');
+    if (!btn) return;
+    var id = btn.dataset.id;
+    var card = document.getElementById(id);
+    if (card) {
+      card.classList.toggle('open');
+      updateBar();
+    }
+  });
+
+  // ── открыть / закрыть все ──
+  var allOpen = false;
+  document.getElementById('barBtn').addEventListener('click', function() {
+    allOpen = !allOpen;
+    document.querySelectorAll('.card:not(.hide)').forEach(function(c) {
+      allOpen ? c.classList.add('open') : c.classList.remove('open');
+    });
+    this.textContent = allOpen ? 'Закрыть все' : 'Открыть все';
+    updateBar();
+  });
+
+  // ── поиск ──
+  var timer;
+  document.getElementById('Q').addEventListener('input', function() {
+    var val = this.value;
+    clearTimeout(timer);
+    timer = setTimeout(function() { runSearch(val); }, 150);
+  });
+
+  function runSearch(val) {
+    var q = val.trim().toLowerCase();
+    var found = 0;
+
+    document.querySelectorAll('.card').forEach(function(card) {
+      if (!q) {
+        card.classList.remove('hide');
+        card.querySelectorAll('.qa').forEach(function(row) { row.classList.remove('hide'); });
+        return;
+      }
+
+      var hasMatch = false;
+      card.querySelectorAll('.qa').forEach(function(row) {
+        if (row.textContent.toLowerCase().indexOf(q) !== -1) {
+          row.classList.remove('hide');
+          hasMatch = true;
+        } else {
+          row.classList.add('hide');
+        }
+      });
+
+      if (hasMatch) {
+        card.classList.remove('hide');
+        card.classList.add('open');
+        found++;
+      } else {
+        card.classList.add('hide');
+      }
+    });
+
+    document.getElementById('nores').style.display = (q && found === 0) ? 'block' : 'none';
+    updateBar();
+  }
+
+  // ── счётчик ──
+  function updateBar() {
+    var all    = document.querySelectorAll('.card:not(.hide)').length;
+    var opened = document.querySelectorAll('.card.open:not(.hide)').length;
+    document.getElementById('barTxt').textContent = opened + ' / ' + all;
+    document.getElementById('barFill').style.width = all > 0 ? (opened / all * 100) + '%' : '0%';
+  }
+
+  updateBar();
+});
+</script>
+</body>
+</html>
